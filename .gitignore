@@ -1,0 +1,37 @@
+# Binarios
+Programs/
+*.exe
+*.dll
+
+# Temporales
+*.tmp
+*.bak
+*.log
+*.err
+
+# Cachés DataFlex
+*.cch
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# DataFlex Embedded Database
+Data/*.dat
+Data/*.hdr
+Data/*.tag
+Data/*.k1
+Data/*.k2
+Data/*.k3
+
+# Logs
+Data/*.log
+
+# Cache
+Data/*.cch
+
+# Archivos locales del IDE DataFlex
+IdeSrc/Workspace.loc
+
+# Configuración personal del IDE
+IdeSrc/*.dsk
