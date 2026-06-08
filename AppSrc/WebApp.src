@@ -9,7 +9,8 @@ Object oApplication is a cApplication
 End_Object
 
 Object oWebApp is a cWebApp
-    Set psTheme to "Df_Material"
+    Set psTheme to "FutbolWebAppGreen"
+    Set psApplicationTitle to "FutbolWebApp"
     Set peAlignView to alignCenter
     
     // It is important to set this so that all views will default
@@ -186,7 +187,6 @@ Object oWebApp is a cWebApp
     Use SessionManager.wo
     Use Login.wo
     Use WebResourceManager.wo
-    
     Use Dashboard.wo
     Use ZoomEntrenador.wo
     Use SelectEntrenador.wo

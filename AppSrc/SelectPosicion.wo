@@ -32,18 +32,12 @@ Object oSelectPosicion is a cWebView
         Set psCSSClass to "MobileList"
         Set pbServerOnRowClick to True
         Set pbFillHeight to True
-        Set pbShowHeader to False
+        Set pbShowHeader to True
         Set piSortColumn to 0
-
-        Object oposicionID is a cWebColumn
-            Entry_Item posicion.ID
-            Set psCaption to "posicion.ID"
-            Set piWidth to 124
-        End_Object 
 
         Object oposicionNombre is a cWebColumn
             Entry_Item posicion.Nombre
-            Set psCaption to "posicion.Nombre"
+            Set psCaption to "Nombre"
             Set piWidth to 621
         End_Object 
 
