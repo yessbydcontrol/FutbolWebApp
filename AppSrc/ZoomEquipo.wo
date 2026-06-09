@@ -168,5 +168,20 @@ Object oZoomEquipo is a cWebView
         Send SetActionButtons
 
     End_Procedure
+    
+    Procedure OnShow
+        String sNombreEquipo
+    
+        Forward Send OnShow
+    
+        Get Field_Current_Value of oequipo_DD Field equipo.Nombre to sNombreEquipo
+    
+        If (sNombreEquipo <> "") Begin
+            WebSet psCaption to sNombreEquipo
+        End
+        Else Begin
+            WebSet psCaption to "Equipo"
+        End
+    End_Procedure
 
 End_Object 

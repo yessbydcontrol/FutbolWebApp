@@ -75,7 +75,15 @@ Object oSelectEquipo is a cWebView
             End_Procedure
 
             Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                String sNombreEquipo
+            
                 Move True to NavigateData.bReadOnly
+            
+                Get Field_Current_Value of oequipo_DD Field equipo.Nombre to sNombreEquipo
+            
+                If (sNombreEquipo <> "") Begin
+                    Set psCaption of oZoomEquipo to sNombreEquipo
+                End
             End_Procedure
         End_Object 
 
@@ -105,7 +113,15 @@ Object oSelectEquipo is a cWebView
         End_Procedure
 
         Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+            String sNombreEquipo
+            
             Move True to NavigateData.bReadOnly
+            
+            Get Field_Current_Value of oequipo_DD Field equipo.Nombre to sNombreEquipo
+            
+            If (sNombreEquipo <> "") Begin
+                Set psCaption of oZoomEquipo to sNombreEquipo
+            End
         End_Procedure
 
     End_Object 
@@ -133,18 +149,19 @@ Object oSelectEquipo is a cWebView
 
             Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
                 Move True to NavigateData.bNewRecord
+                Set psCaption of oZoomEquipo to "Nuevo Equipo"
             End_Procedure
         End_Object 
 
     End_Object 
 
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
-        String sLigaID
-
         Forward Send OnNavigateForward NavigateData hoInvokingView hoInvokingObject
 
         WebSet pbRender of oNewButton to True
         WebSet pbRender of oDetailButton to True
+        
+        WebSet psCaption to "Equipos"
 
         Send Rebuild_Constraints of oequipo_DD
 
