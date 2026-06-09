@@ -147,5 +147,17 @@ Object oZoomPosicion is a cWebView
         Send SetActionButtons
 
     End_Procedure
+    
+    Procedure OnShow
+        String sNombrePosicion
+    
+        Forward Send OnShow
+    
+        Get Field_Current_Value of oposicion_DD Field posicion.Nombre to sNombrePosicion
+    
+        If (sNombrePosicion <> "") Begin
+            WebSet psCaption to sNombrePosicion
+        End
+    End_Procedure
 
 End_Object 
