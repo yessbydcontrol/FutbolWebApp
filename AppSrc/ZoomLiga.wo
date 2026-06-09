@@ -7,8 +7,10 @@ Use cWebPanel.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cWebForm.pkg
+Use cWebButton.pkg
 
 Use cligaDataDictionary.dd
+Use SelectEquipo.wo
 
 Object oZoomLiga is a cWebView
     Set piColumnCount to 12
@@ -22,9 +24,8 @@ Object oZoomLiga is a cWebView
     Object oliga_DD is a cligaDataDictionary
     End_Object 
 
-    Set Main_DD To oliga_DD
-    Set Server  To oliga_DD
-
+    Set Main_DD to oliga_DD
+    Set Server  to oliga_DD
 
     Object oWebMainPanel is a cWebPanel
         Set piColumnCount to 12
@@ -69,6 +70,29 @@ Object oZoomLiga is a cWebView
             Set peLabelPosition to lpTop
             Set psLabel to "EquiposMax"
         End_Object 
+
+        Object oBtnEquiposLiga is a cWebButton
+            Set psCaption to "Ver equipos de esta liga"
+            Set piColumnSpan to 4
+            Set piColumnIndex to 0
+
+            WebRegisterPath ntNavigateForward oSelectEquipo
+
+            Procedure OnClick
+                String sLigaID
+            
+                Get Field_Current_Value of oliga_DD Field liga.ID to sLigaID
+            
+                Set psFiltroLigaID of oSelectEquipo to sLigaID
+            
+                Send NavigatePath
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Move ntNavigateForward to NavigateData.eNavigateType
+            End_Procedure
+        End_Object
+
     End_Object 
 
     Object oActionGroup is a cWebMenuGroup
@@ -80,17 +104,16 @@ Object oZoomLiga is a cWebView
             Procedure OnClick
                 Send Request_Save
             End_Procedure
-
         End_Object 
 
         Object oEditBtn is a cWebMenuItem
             Set psCSSClass to "WebEditMenuItem"
             Set psCaption to "Edit"
+
             Procedure OnClick
                 Send ChangeEditMode True
                 Send SetActionButtons
             End_Procedure
-
         End_Object 
 
         Object oDeleteBtn is a cWebMenuItem
@@ -101,18 +124,18 @@ Object oZoomLiga is a cWebView
             Procedure OnClick
                 Send Request_Delete
             End_Procedure
-
         End_Object 
 
         Object oCancelChangesBtn is a cWebMenuItem
             Set psCSSClass to "WebIcon_Refresh"
             Set psCaption to "Clear Changes"
             Set peActionDisplay to adMenu
+
             Procedure OnClick
                 Send RefreshRecord
             End_Procedure
-
         End_Object 
+
     End_Object 
 
     Procedure SetActionButtons
@@ -124,7 +147,6 @@ Object oZoomLiga is a cWebView
         Get GetNavigateData to NavigateData
         Get HasRecord of hoDD to bHasRecord
 
-        // let's hide all buttons and then Show the ones we want
         WebSet pbRender of oEditBtn to False
         WebSet pbRender of oSaveBtn to False
         WebSet pbRender of oCancelChangesBtn to False
@@ -141,11 +163,9 @@ Object oZoomLiga is a cWebView
     End_Procedure
 
     Procedure OnViewSaved Handle hoServer Boolean bChanged
-        // Close after save
         Send NavigateClose Self
     End_Procedure
 
-    // this will close the view after a delete
     Procedure OnViewDeleted Handle hoDDO
         Send NavigateClose Self
     End_Procedure
@@ -153,23 +173,18 @@ Object oZoomLiga is a cWebView
     Procedure OnNavigateForward tWebNavigateData NavigateData Integer hoInvokingView Integer hoInvokingObject
         Case Begin
             Case (NavigateData.eNavigateType = nfFromMain)
-                // If from main, this is a propbably a main file Select to Zoom.
                 Case Break
 
             Case (NavigateData.eNavigateType = nfFromParent)
-                // If from parent, this is a constrained drill down.
                 Case Break
 
             Case (NavigateData.eNavigateType = nfFromChild)
-                // If from child, this is a probably a parent Zoom from a Zoom.
                 Case Break
 
-            Case Else // must be nfUndefined
-
+            Case Else
         Case End
 
         Send SetActionButtons
-
     End_Procedure
 
-End_Object 
+End_Object
